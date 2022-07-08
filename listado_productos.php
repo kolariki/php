@@ -18,7 +18,7 @@ $aProductos[] = array ("nombre" => "Samsung Galaxy A30 Blanco",
 "modelo" => "Galaxy A30",
 "stock" => 0,
 "precio" => 22000,
-); 
+);
 
 $aProductos[] = array ("nombre" => "Aire Acondicionado Split Inverter Frio/Calor Surrey 2900F",
 "marca" => "Surrey",
@@ -44,5 +44,94 @@ $aProductos[] = array ("nombre" => "Aire Acondicionado Split Inverter Frio/Calor
 </head>
 <body>
     
+    <main class="container">
+    <h1 class="text-center pb-3"> Listado de productos </h1>
+        <div class="row">
+            <div class="col-12 ">
+                <table class="table table-hover border">
+                    <thead>
+                    <tr>
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>Accion</th>
+                    </thead>
+                    </tr>
+                    <tr>
+                    <td> <?php echo $aProductos [0] ["nombre"] ?> </td>
+                    <td> Hitachi</td>
+                    <td> 554KS20</td>
+                    <td> <?php//CON IF
+                    if ($aProductos [0] ["stock"] == 0){
+                        echo " Sin Stock";
+                    }
+                    else if ($aProductos [0] ["stock"] <= 10){
+                        echo "Poco Stock";
+                        }
+
+                        else
+                        {
+                            echo "Hay Stock";
+                        }
+                    
+                    ?>
+                    </td>
+                    <td> $58000</td>
+                    <td>
+                    <button type="button" class="btn btn-primary">Comprar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td> <?php echo $aProductos [1] ["nombre"] ?></td>
+                    <td> Samsung</td>
+                    <td> Galaxy A30</td>
+                    <td> <?php//CON IF
+                   if ($aProductos [1] ["stock"] == 0){
+                    echo " Sin Stock";
+                }
+                else if ($aProductos [1] ["stock"] <= 10 ){
+                    echo "Poco Stock";
+                    }
+
+                    else
+                    {
+                        echo "Hay Stock";
+                    }
+                    ?>
+                    </td>
+                    <td> $22000</td>
+                    <td>
+                    <button type="button" class="btn btn-primary">Comprar</button>
+                    </td>
+                    </tr>             
+                    <tr>
+                    <td> <?php echo $aProductos [2] ["nombre"] ?></td>
+                    <td> <?php echo $aProductos [2] ["marca"] ?></td>
+                    <td>  <?php echo $aProductos [2] ["modelo"] ?></td>
+                    <td> <?php//CON IF
+                    if ($aProductos [2] ["stock"] == 0){
+                        echo " Sin Stock";
+                    }
+                    else if ($aProductos [2] ["stock"] <= 10 ){
+                        echo "Poco Stock";
+                        }
+
+                        else
+                        {
+                            echo "Hay Stock";
+                        }
+                    ?>
+                    </td>
+                    <td> <?php echo $aProductos [2] ["precio"] ?></td>
+                    <td>
+                    <button type="button" class="btn btn-primary">Comprar</button>
+                    </td>
+                    </tr>                
+                </table>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
