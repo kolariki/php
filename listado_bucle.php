@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 $aProductos = array();
 
-$aProductos[] = array(
+$aProductos[0] = array(
     "nombre" => "Smart TV 55\" 4K UHD",
     "marca" => "Hitachi",
     "modelo" => "554KS20",
@@ -14,7 +14,7 @@ $aProductos[] = array(
     "precio" => 58000,
 );
 
-$aProductos[] = array(
+$aProductos[1] = array(
     "nombre" => "Samsung Galaxy A30 Blanco",
     "marca" => "Samsung",
     "modelo" => "Galaxy A30",
@@ -22,7 +22,7 @@ $aProductos[] = array(
     "precio" => 22000,
 );
 
-$aProductos[] = array(
+$aProductos[2] = array(
     "nombre" => "Aire Acondicionado Split Inverter Frio/Calor Surrey 2900F",
     "marca" => "Surrey",
     "modelo" => "553AIQ1201E",
@@ -30,6 +30,7 @@ $aProductos[] = array(
     "precio" => 45000,
 );
 
+                    
 
 //print_r($aProductos);
 ?>
@@ -62,25 +63,25 @@ $aProductos[] = array(
                             <th>Stock</th>
                             <th>Precio</th>
                             <th>Accion</th>
+                        </tr>
                     </thead>
-                    </tr>
+                  
+                    <tbody>
                     <?php
                     $contador = 0;
-                    while ($contador < 3); { ?>
+                    while ($contador < 3 ) {?>
                     <tr>
                         <td> <?php echo $aProductos[$contador]["nombre"] ?> </td>
                         <td> <?php echo $aProductos[$contador]["marca"] ?></td>
                         <td> <?php echo $aProductos[$contador]["modelo"] ?></td>
-                        <td> <?php
-                                echo $aProductos[$contador]["stock"] > 10 ? "Hay Stock" : ($aProductos[$contador]["stock"] > 0 && $aProductos[$contador]["stock"] <= 10 ? "Poco Stock" : "Hay stock");
-                                ?>
-                        </td>
+                        <td> <?php echo $aProductos[$contador]["stock"] > 10 ? "Hay Stock" : ($aProductos[$contador]["stock"] > 0 && $aProductos[$contador]["stock"] <= 10 ? "Poco Stock" : "Sin stock");?></td>
                         <td> <?php echo "$" . $aProductos[$contador]["precio"] ?></td>
-                        <td>
-                            <button type="button" class="btn btn-primary">Comprar</button>
-                        </td>
+                        <td><button class="btn btn-primary">Comprar</button></td>
                     </tr>
-                    <?php $contador++; }?>
+                    <?php
+                    $contador++;
+                    } ?>
+                    </tbody>
                 </table>
             </div>
         </div>
