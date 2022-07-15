@@ -44,17 +44,10 @@ $aEmpleados[3] = array(
 );
 
 
-function calcularNeto($bruto){
+function calcularNeto($bruto = "bruto"){
     return $bruto - ($bruto * 0.17);
 
 }
-"El sueldo bruto es de: <br>";
-echo  (calcularNeto(85000.30)). "<br>";
-echo  (calcularNeto(90000)). "<br>";
-echo  (calcularNeto(100000)). "<br>";
-echo  (calcularNeto(70000));
-
-
 
 
 //print_r($aProductos);
@@ -86,33 +79,27 @@ echo  (calcularNeto(70000));
                     <thead>
                         <tr>
                             <th>DNI</th>
-                            <th>Nombre y Apellido</th>
+                            <th>Nombre</th>
                             <th>Bruto</th>
                         </tr>
                     </thead>
-                  
                     <tbody>
-                    <?php
-                    $sueldoNeto= 0;
-                    $contador = 0;
-                    for ($contador =0; $contador < count($aEmpleados); $contador++ ) {
-                        $sueldoNeto += $aEmpleados[$contador]["bruto"];
-                        ?>
+                    <?php foreach($aEmpleados as $empleado){?>
                     <tr>
-                        <td> <?php echo $aEmpleados[$contador]["dni"] ?> </td>
-                        <td> <?php echo $aEmpleados[$contador]["nombre"] ?></td>
-                        <td> <?php echo (calcularNeto(85000.30)) ?></td>
+                        <td><?php echo $empleado ["dni"]; ?></td>
+                        <td><?php echo mb_strtoupper( $empleado ["nombre"]); ?></td>
+                        <td> $<?php echo number_format (calcularNeto($empleado ["bruto"]),2 , ",", "."); ?></td>
                     </tr>
-                    <?php
-                  
-                    } ?>
+                    <?php }?>
                     </tbody>
                 </table>
             </div>
         </div>
-        <?php     
-            echo "Cantidad de empleados activos:" . contar($aEmpleados);
-     ?>
+        <div class="row">
+            <div class="col-12">   
+            <p> Cantidad de empleados activos:  <?php echo count($aEmpleados);?></p>
+            </div>
+        </div>
     </main>
 </body>
 
