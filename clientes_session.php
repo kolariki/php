@@ -6,11 +6,15 @@ error_reporting(E_ALL);
 
 session_start();
 
+
+
 if (isset($_SESSION["listadoClientes"])) {
     $aClientes = $_SESSION["listadoClientes"];
 } else {
     $aClientes = array();
 }
+
+
 
 if ($_POST) {
 
@@ -32,6 +36,8 @@ if ($_POST) {
 }
 
 
+
+
 if (isset($_GET["pos"])) {
     $pos = $_GET["pos"];
     unset($aClientes[$pos]);
@@ -44,7 +50,6 @@ if (isset($_GET["pos"])) {
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,10 +59,8 @@ if (isset($_GET["pos"])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     </svg>
 </head>
-
 <body>
     <header>
-
     </header>
     <main>
         <div class="container">
@@ -69,32 +72,32 @@ if (isset($_GET["pos"])) {
             <div class="row">
                 <div class="col-4 pt-5">
                     <form action="" method="POST">
-                        <div class="my-4">
-                            <label for="">Nombre:
+                        <div class="py-4">
+                            <label for="">Nombre:</label>
                                 <input type="text" name="txtNombre" id="txtNombre" class="form-control">
                         </div>
-                        <div class="my-3">
-                            <label for="">DNI:
+                        <div class="py-3">
+                            <label for="">DNI:</label>
                                 <input type="text" name="txtDni" id="txtDni" class="form-control">
                             </label>
                         </div>
-                        <div class="my-3">
-                            <label for="">Telefono:
+                        <div class="py-3">
+                            <label for="">Telefono:</label>
                                 <input type="text" name="txtTelefono" id="txtTelefono" class="form-control">
                             </label>
                         </div>
-                        <div class="my-3">
-                            <label for="">Edad:
+                        <div class="py-3">
+                            <label for="">Edad:</label>
                                 <input type="number" name="txtEdad" id="txtEdad" class="form-control">
                             </label>
                         </div>
-                        <div class="my-3">
+                        <div class="py-3">
                             <button type="submit" name="btnEnviar" class="btn bg-primary text-white">Enviar</button>
                             <button type="submit" name="btnEliminar" class="btn bg-danger text-white">Eliminar</button>
                         </div>
                     </form>
                 </div>
-                <div class="col-4 col-sm-6 my-3 pt-4">
+                <div class="col-4 col-sm-8 my-3 pt-4">
                     <table class="table table-hover border">
                         <thead>
                             <th>Nombre:</th>
@@ -119,5 +122,4 @@ if (isset($_GET["pos"])) {
             </div>
         </div>
     </main>
-
 </html>
