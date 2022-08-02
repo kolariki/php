@@ -60,8 +60,6 @@ if (isset($_GET["pos"])) {
     </svg>
 </head>
 <body>
-    <header>
-    </header>
     <main>
         <div class="container">
             <div class="row my-5">
