@@ -1,1 +1,1 @@
-[{"documento":"sdwe","nombre":"rwer","telefono":"werwe","correo":"wer@dfsdf"},{"documento":"2321","nombre":"sadasd","telefono":"q2eqw","correo":"qwe@sdfsd"}]
+[{"documento":"35302545","nombre":"ivan kolarik","telefono":"3644 389712","correo":"ivankolariki1990@gmail.com","imagen":"2022080406085629.jpeg"},{"documento":"32225515","nombre":"pochoclo sosa","telefono":"0303456","correo":"pochoclo@gmail.com","imagen":"2022080406083829.png"}]

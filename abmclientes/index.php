@@ -21,16 +21,58 @@ $aClientes = json_decode($jsonClientes, true);
     $aClientes = array();
 }
 
+$pos = isset($_GET["pos"]) && $_GET["pos"] >= 0 ? $_GET["pos"] : "";
+
 if ($_POST) {
         $documento = trim($_POST["txtDocumento"]);
         $nombre = trim($_POST["txtNombre"]);
         $telefono = trim($_POST["txtTelefono"]);
         $correo= trim($_POST["txtCorreo"]);
+        $nombreImagen = "";
 
-        $aClientes[] = array("documento" => $documento, 
-                             "nombre" => $nombre, 
-                             "telefono" => $telefono, 
-                             "correo" => $correo);
+
+        if($pos >= 0){
+            if($_FILES["archivo"] ["error"] === UPLOAD_ERR_OK){
+                $nombreAleatorio = date("Ymdhmsi"); 
+                $archivo_tmp = $_FILES["archivo"]["tmp_name"];
+                $extension = pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION);
+                if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
+                    $nombreImagen = "$nombreAleatorio.$extension";
+                    move_uploaded_file($archivo_tmp, "imagen/$nombreImagen");
+                }
+                //eliminar imagen anterior
+                if($aClientes[$pos]["imagen"] != "" && file_exists("imagen/".$aClientes[$pos]["imagen"])){
+                    unlink("imagen/".$aClientes[$pos]["imagen"]);
+                }
+
+            } else{
+                //mantener el nombreImagen que teniamos antes
+                $nombreImagen = $aClientes[$pos]["imagen"];
+            }
+            $aClientes[$pos] = array(   "documento" => $documento, 
+                                        "nombre" => $nombre, 
+                                        "telefono" => $telefono, 
+                                        "correo" => $correo,
+                                        "imagen" => $nombreImagen);
+
+        } else {
+            if($_FILES["archivo"] ["error"] === UPLOAD_ERR_OK){
+            $nombreAleatorio = date("Ymdhmsi"); 
+            $archivo_tmp = $_FILES["archivo"]["tmp_name"];
+            $extension = pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION);
+            if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
+                $nombreImagen = "$nombreAleatorio.$extension";
+                move_uploaded_file($archivo_tmp, "imagen/$nombreImagen");
+            }
+        }
+
+            $aClientes[] = array(   "documento" => $documento, 
+                                    "nombre" => $nombre, 
+                                    "telefono" => $telefono, 
+                                    "correo" => $correo,
+                                    "imagen" => $nombreImagen);
+        }
+       
 
         //convertir el array de clientes a json
             $jsonClientes = json_encode($aClientes);
@@ -40,6 +82,19 @@ if ($_POST) {
 
 }
 
+
+
+if(isset($_GET["do"]) && $_GET["do"] == "eliminar"){
+    //eliminar del array Aclientes la posicion a borrar unset()
+ unset($aClientes[$pos]);
+
+ //convertir el array de clientes a  jsonClientes
+ $jsonClientes = json_encode($aClientes);
+
+ //almacenar el string jsonClientes en el "archivo.txt"
+file_put_contents("archivo.txt", $jsonClientes);
+header("Location: index.php");
+}
 
 
 
@@ -71,29 +126,29 @@ if ($_POST) {
                     <form action="" method="POST" enctype="multipart/form-data">
                        
                                 <label for="">DNI:*</label>
-                                <input type="text" name="txtDocumento" id="txtDocumento" class="form-control" placeholder="000000000">
+                                <input type="text" name="txtDocumento" id="txtDocumento" class="form-control" required value="<?php echo isset($aClientes[$pos])? $aClientes[$pos]["documento"] : ""; ?>" placeholder="000000000">
                        
                         
                                 <label for="">Nombre:*</label>
-                                <input type="text" name="txtNombre" id="txtNombre" class="form-control" placeholder="Juan Perez">
+                                <input type="text" name="txtNombre" id="txtNombre" class="form-control"  required value="<?php echo isset($aClientes[$pos])? $aClientes[$pos]["nombre"] : ""; ?>" placeholder="Juan Perez">
                             
                       
                         
                                 <label for="">Telefono:*</label>
-                                <input type="text" name="txtTelefono" id="txtTelefono" class="form-control" placeholder="+54 000000000">
+                                <input type="text" name="txtTelefono" id="txtTelefono" class="form-control" required value="<?php echo isset($aClientes[$pos])? $aClientes[$pos]["telefono"] : ""; ?>" placeholder="+54 000000000">
                       
                                 <div class="pb-3">
                                  <label for="">Correo:*</label>
-                                <input type="email" name="txtCorreo" id="txtCorreo" class="form-control" placeholder="aaaaa@gmail.com">
+                                <input type="email" name="txtCorreo" id="txtCorreo" class="form-control" required value="<?php echo isset($aClientes[$pos])? $aClientes[$pos]["correo"] : ""; ?>" placeholder="aaaaa@gmail.com">
                                 </div>
                         
                             <label for=""> Archivo adjunto: </label>
-                           <strong> <input type="file" name="archivo1" id="archivo1" accept=".jpg, .jpeg, .png"> <br> </strong>
+                           <strong> <input type="file" name="archivo" id="archivo" accept=".jpg, .jpeg, .png"> <br> </strong>
                             <small> admitidos: .jpg, .jpeg, .png </small>
                        
                         <div class="py-3">
                             <button type="submit" name="btnGuardar" class="btn bg-primary text-white">Guardar</button>
-                            <button type="submit" name="btnNuevo" class="btn bg-danger text-white">NUEVO</button>
+                            <a href="index.php" class="btn btn-danger my-2">NUEVO</a>
                         </div>
                     </form>
                 </div>
@@ -103,22 +158,25 @@ if ($_POST) {
                             <th>Imagen</th>
                             <th>DNI</th>
                             <th>Nombre</th>
-                            
                             <th>Correo</th>
                             <th>Acciones</th>
                         </thead>
                         <tbody>
-                            <?php foreach($aClientes as $cliente): ?>
+                            <?php foreach($aClientes as $pos => $cliente): ?>
                         
                                 <tr>
-                                    <td> <?php ?> </td>
+                                    <td>
+                                        <?php if ($cliente["imagen"] != "") : ?>
+                                        <img src="imagen/<?php echo $cliente["imagen"]; ?>" class = "img-thumbnail"><?php ?> 
+                                        <?php endif; ?>
+                                    </td>
                                     <td> <?php echo $cliente["documento"] ?> </td>
                                     <td> <?php  echo $cliente["nombre"]?> </td>
                                     <td> <?php echo $cliente["correo"] ?> </td>
                                     <td>
-                                        <a href=""><i class="bi bi-pencil-square"></i></a>
-                                        <a href=""><i class="bi bi-trash-fill"></i></a>
-                                    </td> 
+                                        <a href="index.php?pos=<?php echo $pos; ?>&do=editar"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="index.php?pos=<?php echo $pos; ?>&do=eliminar"><i class="bi bi-trash-fill"></i></a>
+                                    </td>  
                                 </tr>     
                                 <?php endforeach; ?>
                     </table>
