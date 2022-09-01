@@ -5,21 +5,37 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 class Persona{
-    public $dni;
-    public $nombre;
-    public $edad;
-    public $nacionalidad;
+    protected $dni;
+    protected $nombre;
+    protected $edad;
+    protected $nacionalidad;
+
+
+    public function setDni($dni){ $this -> dni = $dni;}
+    public function getDni($dni){ return $this -> dni;}
+
+    public function setNombre($nombre){ $this -> nombre = $nombre;}
+    public function getNombre($nombre){ return $this -> nombre;}
+
+    public function setNacionalidad($nacionalidad){ $this -> nacionalidad = $nacionalidad;}
+    public function getNacionalidad($nacionalidad){ return $this -> nacionalidad;}
+
+    public function setEdad($edad){ $this -> edad = $edad;}
+    public function getEdad($edad){ return $this -> edad;}
+
 
     public function imprimir(){}
 }
 
 
 
+
+
 class Alumno extends Persona {
-    public $legajo;
-    public $notaPortfolio;
-    public $notaPhp;
-    public $notaProyecto;
+    private $legajo;
+    private $notaPortfolio;
+    private $notaPhp;
+    private $notaProyecto;
 
     public function __construct()
     {
@@ -27,6 +43,18 @@ class Alumno extends Persona {
         $this-> notaPhp = 0.0;
         $this-> notaProyecto = 0.0;
     }
+
+
+
+
+    public function __get($propiedad){
+        return $this -> $propiedad;
+    }
+
+    public function __set($propiedad, $valor){
+        return $this -> $propiedad = $valor;
+    }
+
     public function sumar(){}
 
     public function imprimir(){
@@ -47,10 +75,26 @@ class Alumno extends Persona {
 }
 
 class Docente extends Persona{
-    public $especialidad;
+    private $especialidad;
+    const ESPECIALIDAD_WP = "Wordpress";
+    const ESPECIALIDAD_ECO = "Economia Aplicada";
+    const ESPECIALIDAD_BBDD = "Base de Datos";
+
+   /* public function __destruct()
+    {
+        echo "Destruyendo el objeto" . $this->nombre . "<br>";
+    }*/ 
+
     public function imprimir(){}
-    public function imprimirEspecialidadesHabilitadas(){}
+    public function imprimirEspecialidadesHabilitadas(){
+        echo "Un docente puede tener las siguientes especialidades: <br>";
+        echo "Especialidad 1: " . self::ESPECIALIDAD_BBDD . "<br>"; 
+        echo "Especialidad 2: " . self::ESPECIALIDAD_ECO . "<br>";
+        echo "Especialidad 3: " . self::ESPECIALIDAD_WP . "<br>";
+    }
 }
+
+//PROGRAMA
 
 $alumno1 = new Alumno();
 $alumno1 -> dni = "33252121";
@@ -75,5 +119,11 @@ $alumno2 -> notaProyecto = "6";
 $alumno2 -> notaPhp ="7";
 $alumno2 -> calcularPromedio();
 $alumno2 -> imprimir();
+
+$docente = new Docente();
+$docente -> nombre = "Juan Perez";
+$docente -> esoecialidad = Docente::ESPECIALIDAD_BBDD;
+$docente -> imprimirEspecialidadesHabilitadas();
+
 
 ?>
