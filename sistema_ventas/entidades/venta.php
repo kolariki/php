@@ -52,7 +52,7 @@ class Venta
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
         //Obtiene el id generado por la inserción
-        $this->idproducto = $mysqli->insert_id;
+        $this->idventa = $mysqli->insert_id;
         //Cierra la conexión
         $mysqli->close();
     }
