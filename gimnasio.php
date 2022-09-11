@@ -17,6 +17,15 @@ class Persona{
     public function __set($propiedad, $valor){
         return $this -> $propiedad = $valor;
     }
+
+    public function __construct($dni, $nombre, $correo, $celular)
+    {
+        $this-> dni = $dni;
+        $this-> nombre = $nombre;
+        $this-> correo = $correo;
+        $this-> celular = $celular;
+        
+    }
  
 }
 
@@ -29,10 +38,7 @@ class Alumno extends Persona{
 
     public function __construct($dni,$nombre,$correo, $celular, $fechaNac )
     {
-        $this-> dni = $dni;
-        $this-> nombre = $nombre;
-        $this-> correo = $correo;
-        $this-> celular = $celular;
+        parent:: __construct($dni,$nombre,$correo, $celular);
         $this-> fechaNac = $fechaNac;
         $this-> peso = 0.0;
         $this-> altura =0.0;
@@ -63,10 +69,7 @@ class Entrenador extends Persona {
 
     public function __construct($dni, $nombre, $correo, $celular)
     {
-        $this-> dni = $dni;
-        $this-> nombre = $nombre;
-        $this-> correo = $correo;
-        $this-> celular = $celular;
+        parent:: __construct($dni,$nombre,$correo, $celular);
         $this-> aClases = array();
         
     }
