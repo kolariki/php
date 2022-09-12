@@ -82,7 +82,7 @@ $aAlumnos[] = array("nombre" => "Monica Ledesma", "notas" => array(8, 9), "prome
         <div class="row">
             <div class="col-12">
             <?php { ?>
-                <p> Promedio de la cursada: <?php  echo total($alumno["promedio"]) * ;  ?></p>
+                <p> Promedio de la cursada: <?php  echo total($alumno["promedio"]) ?></p>
                 <?php } ?>
             </div>
         </div>
